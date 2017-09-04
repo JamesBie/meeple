@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="currentplayer"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:id="@+id/current_player"
+/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/point_counter"
+    android:layout_below="@id/current_player"
+    android:paddingTop="20dp">
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        android:id="@+id/decrement_one_button"
+        android:background="@drawable/minus_button"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text = "0"
+        android:layout_weight="1"
+        android:textSize="20dp"
+android:layout_gravity="center_vertical"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:id="@+id/current_points" />
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/increment_one_button"
+        android:background="@drawable/plus_button"
+        />
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:gravity="center"
+        android:paddingBottom="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_weight="1"
+            android:textAlignment="center"
+
+            android:id="@+id/cancel_score_button"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_corner"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="Confirm"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:id="@+id/confirmation_score_button"
+        android:background="@drawable/rounded_corner"
+        android:textSize="20sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+
+        />
+
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        android:hint="Enter Seconds for Timer"
+        android:textColorHint="@color/black"
+        android:paddingTop="20dp"
+        >
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/timer_edittext"
+        android:inputType="number"
+        android:text = " "/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_start_button"
+        android:text="Start"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_stop_button"
+        android:text= "Pause"/>
+</LinearLayout>
+

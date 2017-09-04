@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PlayerCounter">
+
+    <item android:id="@+id/action_previous"
+        android:title = "Previous"/>
+    <item android:id="@+id/end_game"
+        android:title= "End Game"
+        app:showAsAction="never" />
+
+</menu>

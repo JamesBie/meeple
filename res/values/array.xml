@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name = "array_player_options">
+        <item>@string/one_player</item>
+        <item>@string/two_player</item>
+        <item>@string/three_player</item>
+        <item>@string/four_player</item>
+        <item>@string/five_player</item>
+        <item>@string/six_player</item>
+        <item>@string/seven_player</item>
+        <item>@string/eight_player</item>
+
+
+
+    </string-array>
+
+
+
+
+
+</resources>

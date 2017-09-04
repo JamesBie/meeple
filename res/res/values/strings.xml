@@ -1,0 +1,21 @@
+<resources>
+    <string name = "app_name">Boardgamecollection</string>
+    <string name ="set_user_name">Set User</string>
+    <string name = "set_player_count">Set Players</string>
+    <string name = "point_tracker"> Point Tracker</string>
+    <string name = "game_recommendation"> Game recommendation</string>
+    <string name = "collection_detail"> Collection Details</string>
+    <string name="one_player">One</string>
+    <string name="two_player">Two</string>
+    <string name="three_player">Three</string>
+    <string name="four_player">Four</string>
+    <string name="five_player">Five</string>
+    <string name="six_player">Six</string>
+    <string name="seven_player">Seven</string>
+    <string name="eight_player">Eight</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-2679874130351383/2363289486</string>
+
+
+
+</resources>
