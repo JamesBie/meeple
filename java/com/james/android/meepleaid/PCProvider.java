@@ -128,7 +128,7 @@ public class PCProvider extends ContentProvider {
         if( name == null) {
             throw new IllegalArgumentException("PC requires a name");
         }
-        String user = values.getAsString(PCContract.PCEntry.Column_PC_USER);
+        String user = values.getAsString(PCContract.PCEntry.COLUMN_PC_USER);
         Log.i("insertPC", "value of user is " + user);
 
         Integer score = values.getAsInteger(PCContract.PCEntry.COLUMN_PC_SCORE);
@@ -182,7 +182,7 @@ public class PCProvider extends ContentProvider {
     }
 
     /**
-     * update pets in the database with given content values. apply the changes to the rows
+     * update players in the database with given content values. apply the changes to the rows
      * specified in the selection and selection arguments( which could be 0 or 1 or more bg's
      * return the number of rows that were successfully updated
      */
@@ -198,8 +198,8 @@ public class PCProvider extends ContentProvider {
                 throw new IllegalArgumentException("PC requires a name");
             }
         }
-        if(values.containsKey(PCContract.PCEntry.Column_PC_USER)){
-            String user = values.getAsString(PCContract.PCEntry.Column_PC_USER);
+        if(values.containsKey(PCContract.PCEntry.COLUMN_PC_USER)){
+            String user = values.getAsString(PCContract.PCEntry.COLUMN_PC_USER);
             if (user ==null){
                 throw new IllegalArgumentException("PC requires a Username");
             }

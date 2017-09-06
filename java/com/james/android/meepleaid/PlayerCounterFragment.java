@@ -39,6 +39,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
     public static final String ARG_PAGE = "page";
     private int mPlayerCount = 0; //value thats added or subtracted from players current score tracker
     private int mPageNumber; //current page fragment beign viewed
+    private String mUsername;
     private int mTotalFragments;
     private String baseScore = "0";
     private String playerScoreText;
@@ -87,7 +88,6 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
         mPageNumber = getArguments().getInt(ARG_PAGE);
         mTotalFragments = getArguments().getInt("totalpage");
 
@@ -107,7 +107,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
         if (!tableexist) {
             database.execSQL("CREATE TABLE " + PCContract.PCEntry.TABLE_NAME + " ( " + PCContract.PCEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + PCContract.PCEntry.COLUMN_PC_NAME + " TEXT NOT NULL,"
-                    + PCContract.PCEntry.Column_PC_USER + " TEXT NOT NULL,"
+                    + PCContract.PCEntry.COLUMN_PC_USER + " TEXT NOT NULL,"
                     + PCContract.PCEntry.COLUMN_PC_SCORE + " INTEGER NOT NULL, "
                     + PCContract.PCEntry.COLUMN_PC_TOTALTIME + " REAL);");
 
@@ -116,7 +116,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
                 String mUserName = "Player " + String.valueOf(i + 1);
                 Log.i("creating database", "username is! " + mUserName);
                 cv.put(PCContract.PCEntry.COLUMN_PC_NAME, (mUserName));
-                cv.put(PCContract.PCEntry.Column_PC_USER,"a");
+                cv.put(PCContract.PCEntry.COLUMN_PC_USER,"a");
                 cv.put(PCContract.PCEntry.COLUMN_PC_SCORE, 0);
                 cv.put(PCContract.PCEntry.COLUMN_PC_TOTALTIME, 0);
 
@@ -131,17 +131,31 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.player_counter, container, false);
+
+
+// figure out why i need this before things update
+        ContentValues cv = new ContentValues();
+        cv.put(PCContract.PCEntry.COLUMN_PC_NAME, "Player " + String.valueOf(mPageNumber + 1));
+        Uri currentPlayerUri = PCContract.PCEntry.CONTENT_URI;
+        currentPlayerUri = Uri.withAppendedPath(PCContract.PCEntry.CONTENT_URI, (String.valueOf(mPageNumber + 1)));
+        int rowsAffected = getActivity().getContentResolver().update(currentPlayerUri, cv, null, null);
+
+
         ImageView incrementone = (ImageView) rootView.findViewById(R.id.increment_one_button);
         ImageView decrementone = (ImageView) rootView.findViewById(R.id.decrement_one_button);
         ImageView incrementfive = (ImageView) rootView.findViewById(R.id.increment_five_button);
         ImageView decrementfive = (ImageView) rootView.findViewById(R.id.decrement_five_button);
         final TextView playerScore = (TextView) rootView.findViewById(R.id.current_points);
         final TextInputLayout inputLayout = (TextInputLayout) rootView.findViewById(R.id.inputLayout);
+        final TextView playerName = (TextView) rootView.findViewById(R.id.current_player);// Title at tope for who player is
+        final String currentPlayer = "Player " + String.valueOf(mPageNumber + 1); // finds player from fragment
+
+        //playerName.setText(currentPlayer);
 
         Log.i("beforetestprojection", "testing projection");
         String[] testprojection = {
                 PCContract.PCEntry.COLUMN_PC_NAME,
-                PCContract.PCEntry.Column_PC_USER,
+                PCContract.PCEntry.COLUMN_PC_USER,
                 PCContract.PCEntry.COLUMN_PC_SCORE,
                 PCContract.PCEntry.COLUMN_PC_TOTALTIME
         };
@@ -161,7 +175,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
             int nameColumnIndex = testcursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_NAME);
             Log.i("after namecolumnindex", "nameColumn index is " + nameColumnIndex);
 
-            int userColumnIndex = testcursor.getColumnIndex(PCContract.PCEntry.Column_PC_USER);
+            int userColumnIndex = testcursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_USER);
             Log.i("after namecolumnindex", "nameColumn index is " + nameColumnIndex);
             int scoreColumnIndex = testcursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_SCORE);
             Log.i("after scorecolumnindex", "scoreColumn index is " + scoreColumnIndex);
@@ -176,6 +190,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
                 int currentScore = testcursor.getInt(scoreColumnIndex);
                 double currentTime = testcursor.getDouble(timeColumnIndex);
 
+
                 Log.i("values of database are", /*"current id"+ currentID+*/ "current name " + currentName +"current user "+currentUser+
                          " current Score " + currentScore + " currentTime " + currentTime);
 
@@ -187,14 +202,12 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
         }
 
 
-        TextView playerName = (TextView) rootView.findViewById(R.id.current_player);// Title at tope for who player is
-        final String currentPlayer = "Player " + String.valueOf(mPageNumber + 1); // finds player from fragment
-        playerName.setText(currentPlayer);
+
 
         // Retrieve the values from database
         String[] projection = {
                 PCContract.PCEntry.COLUMN_PC_NAME,
-                PCContract.PCEntry.Column_PC_USER,
+                PCContract.PCEntry.COLUMN_PC_USER,
                 PCContract.PCEntry.COLUMN_PC_SCORE,
                 PCContract.PCEntry.COLUMN_PC_TOTALTIME
         };
@@ -206,7 +219,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
 
 
         if (cursor != null && cursor.moveToFirst()) { //check if cursor is null
-            int userColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.Column_PC_USER);
+            int userColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_USER);
             int scoreColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_SCORE);
             cursor.moveToFirst();
             int timeColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_TOTALTIME);
@@ -219,7 +232,9 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
             playerTime = cursor.getDouble(timeColumnIndex);
 
             playerScore.setText(String.valueOf(currentScore));
+            playerName.setText(currentUser);
             baseScore = playerScore.getText().toString().split(" ")[0];
+
 
 
             cursor.close();
@@ -389,7 +404,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
                 //update time in database if timer is fully cancelled.
                 String[] projection = {
                         PCContract.PCEntry.COLUMN_PC_NAME,
-                        PCContract.PCEntry.Column_PC_USER,
+                        PCContract.PCEntry.COLUMN_PC_USER,
                         PCContract.PCEntry.COLUMN_PC_SCORE,
                         PCContract.PCEntry.COLUMN_PC_TOTALTIME
                 };
@@ -401,7 +416,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
 
 
                 if (cursor != null && cursor.moveToFirst()) { //check if cursor is null
-                    int userColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.Column_PC_USER);
+                    int userColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_USER);
                     int scoreColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_SCORE);
                     cursor.moveToFirst();
                     int timeColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_TOTALTIME);

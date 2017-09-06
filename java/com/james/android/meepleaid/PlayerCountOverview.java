@@ -49,7 +49,7 @@ public class PlayerCountOverview extends AppCompatActivity {
         Cursor cursor = database.rawQuery("SELECT * FROM " + PCContract.PCEntry.TABLE_NAME,null);
         int idColumnIndex = cursor.getColumnIndex(PCContract.PCEntry._ID);
         int nameColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_NAME);
-        int userColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.Column_PC_USER);
+        int userColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_USER);
         int scoreColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_SCORE);
         int timeColumnIndex = cursor.getColumnIndex(PCContract.PCEntry.COLUMN_PC_TOTALTIME);
 
@@ -92,7 +92,7 @@ public class PlayerCountOverview extends AppCompatActivity {
         if (!tableexist){
             database.execSQL("CREATE TABLE " + PCContract.PCEntry.TABLE_NAME + " ( " + PCContract.PCEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + PCContract.PCEntry.COLUMN_PC_NAME + " TEXT NOT NULL,"
-                    + PCContract.PCEntry.Column_PC_USER + " TEXT NOT NULL,"
+                    + PCContract.PCEntry.COLUMN_PC_USER + " TEXT NOT NULL,"
                     + PCContract.PCEntry.COLUMN_PC_SCORE + " INTEGER NOT NULL, "
                     + PCContract.PCEntry.COLUMN_PC_TOTALTIME + " REAL);");
 
@@ -139,7 +139,7 @@ public class PlayerCountOverview extends AppCompatActivity {
                 ContentValues cv = new ContentValues();
                 database = mDbHelper.getWritableDatabase();
                 cv.put(PCContract.PCEntry.COLUMN_PC_NAME,"player "+ String.valueOf(pcAdapter.getCount()+1));
-                cv.put(PCContract.PCEntry.Column_PC_USER, "a");
+                cv.put(PCContract.PCEntry.COLUMN_PC_USER, "user"+ String.valueOf(pcAdapter.getCount()+1));
                 cv.put(PCContract.PCEntry.COLUMN_PC_SCORE,0);
                 cv.put(PCContract.PCEntry.COLUMN_PC_TOTALTIME, 0);
                 Uri uri = getContentResolver().insert(PCContract.PCEntry.CONTENT_URI, cv);
