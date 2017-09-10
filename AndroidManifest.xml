@@ -8,12 +8,13 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="Boardgame Collection">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,7 +48,7 @@
         </activity>
 
         <activity android:name=".ResumeGameActivity"
-            android:label="Game"
+            android:label="Resume"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -70,6 +71,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <activity android:name=".UserChangePopup"
+            android:theme="@style/AppTheme.CustomTheme"
+            android:label="Set Player name"
+
+            ></activity>
 
         <provider
             android:authorities="com.james.android.meepleaid.boardgamecollection"

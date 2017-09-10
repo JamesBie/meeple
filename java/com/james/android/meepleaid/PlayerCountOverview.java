@@ -139,7 +139,7 @@ public class PlayerCountOverview extends AppCompatActivity {
                 ContentValues cv = new ContentValues();
                 database = mDbHelper.getWritableDatabase();
                 cv.put(PCContract.PCEntry.COLUMN_PC_NAME,"player "+ String.valueOf(pcAdapter.getCount()+1));
-                cv.put(PCContract.PCEntry.COLUMN_PC_USER, "user"+ String.valueOf(pcAdapter.getCount()+1));
+                cv.put(PCContract.PCEntry.COLUMN_PC_USER, "player "+ String.valueOf(pcAdapter.getCount()+1));
                 cv.put(PCContract.PCEntry.COLUMN_PC_SCORE,0);
                 cv.put(PCContract.PCEntry.COLUMN_PC_TOTALTIME, 0);
                 Uri uri = getContentResolver().insert(PCContract.PCEntry.CONTENT_URI, cv);

@@ -2,9 +2,11 @@ package com.james.android.meepleaid;
 
 
 import android.app.Activity;
+
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +58,11 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
     private long timeRemaining = 0;
     private double playerTime;
     static CountDownTimer timer;
+
+
+ 
+
+
 
     //occurs before create so we can ensure we get the context for the database
     @Override
@@ -242,9 +250,21 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
         TextView confirmButton = (TextView) rootView.findViewById(R.id.confirmation_score_button);
         TextView cancelButton = (TextView) rootView.findViewById(R.id.cancel_score_button);
 
-        //Clicking confirm will bring the score into the database and set the textview.
 
-//increase scorecounter by one
+
+
+
+        playerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new UserChangePopup();
+                newFragment.show(getFragmentManager(), "username " + String.valueOf(mPageNumber) );
+            }
+
+        });
+
+        //Clicking confirm will bring the score into the database and set the textview.
+        //increase scorecounter by one
         incrementone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

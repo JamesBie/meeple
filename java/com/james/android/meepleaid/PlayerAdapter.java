@@ -44,7 +44,7 @@ public class PlayerAdapter extends ArrayAdapter<Players> {
         }
         if (!mPlayerList.isEmpty()) {
             TextView playerName = (TextView) listItemView.findViewById(R.id.player_overview_name);
-            playerName.setText(mPlayerList.get(position).getPlayerName());
+            playerName.setText(mPlayerList.get(position).getUserName());
 
             TextView playerScore = (TextView) listItemView.findViewById(R.id.player_overview_score);
             playerScore.setText(String.valueOf(mPlayerList.get(position).getScore()));
