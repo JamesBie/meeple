@@ -189,7 +189,7 @@ public class PlayerCountOverview extends AppCompatActivity {
                 Random randompicker = new Random();
                 if (pcAdapter.getCount() > 0) {
                     int randomNum = (int) (randompicker.nextDouble() * (pcAdapter.getCount() ));
-                    Toast.makeText(this, "Player randomly chosen was " + pcAdapter.getItem(randomNum).getPlayerName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Player randomly chosen was " + pcAdapter.getItem(randomNum).getUserName(), Toast.LENGTH_SHORT).show();
                 } else{
                     Toast.makeText(this, "No players found", Toast.LENGTH_SHORT).show();
                 }
