@@ -3,6 +3,7 @@ package com.james.android.meepleaid;
 
 import android.app.Activity;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.app.DialogFragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -37,7 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlayerCounterFragment extends android.support.v4.app.Fragment {
+public class PlayerCounterFragment extends android.support.v4.app.Fragment implements UserChangePopup.NoticeDialogListener {
     //argument keyfor the page number this fragment represents
     public static final String ARG_PAGE = "page";
     private int mPlayerCount = 0; //value thats added or subtracted from players current score tracker
@@ -46,6 +48,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
     private int mTotalFragments;
     private String baseScore = "0";
     private String playerScoreText;
+    private TextView playerName;
     private static boolean tableexist;
     private static boolean tabletest = false;
     private static SQLiteDatabase database;
@@ -60,7 +63,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
     static CountDownTimer timer;
 
 
- 
+
 
 
 
@@ -137,6 +140,37 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
 
 
     @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        Dialog dialogView = dialog.getDialog();
+        EditText usernameChange = (EditText) dialogView.findViewById(R.id.popupUserEdit);
+        mUsername= usernameChange.getText().toString();
+        if(!mUsername.isEmpty()) {
+            Log.d("dialogedittext", mUsername);
+            ContentValues cv = new ContentValues();
+            cv.put(PCContract.PCEntry.COLUMN_PC_NAME, "Player " + String.valueOf(mPageNumber + 1));
+            cv.put(PCContract.PCEntry.COLUMN_PC_USER, mUsername);
+            Uri currentPlayerUri = PCContract.PCEntry.CONTENT_URI;
+            currentPlayerUri = Uri.withAppendedPath(PCContract.PCEntry.CONTENT_URI, (String.valueOf(mPageNumber + 1)));
+            int rowsAffected = getActivity().getContentResolver().update(currentPlayerUri, cv, null, null);
+            if (rowsAffected > 0) {
+                playerName.setText(mUsername);
+            }
+        }
+        }
+
+
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialogFragment) {
+
+    }
+
+    @Override
+    public void usernameDialog(String Username) {
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.player_counter, container, false);
 
@@ -155,7 +189,7 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
         ImageView decrementfive = (ImageView) rootView.findViewById(R.id.decrement_five_button);
         final TextView playerScore = (TextView) rootView.findViewById(R.id.current_points);
         final TextInputLayout inputLayout = (TextInputLayout) rootView.findViewById(R.id.inputLayout);
-        final TextView playerName = (TextView) rootView.findViewById(R.id.current_player);// Title at tope for who player is
+        playerName = (TextView) rootView.findViewById(R.id.current_player);// Title at tope for who player is
         final String currentPlayer = "Player " + String.valueOf(mPageNumber + 1); // finds player from fragment
 
         //playerName.setText(currentPlayer);
@@ -252,13 +286,17 @@ public class PlayerCounterFragment extends android.support.v4.app.Fragment {
 
 
 
+        /**  Dialog box stuff when clicking the username in the fragment **/
+
 
 
         playerName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new UserChangePopup();
+                newFragment.setTargetFragment(PlayerCounterFragment.this,0);
                 newFragment.show(getFragmentManager(), "username " + String.valueOf(mPageNumber) );
+
             }
 
         });
