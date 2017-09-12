@@ -3,6 +3,7 @@ package com.james.android.meepleaid;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +27,10 @@ public class ResumeGameActivity extends AppCompatActivity {
                 PCDBHelper mDbHelper = new PCDBHelper(v.getContext());
                 SQLiteDatabase database;
                 database = mDbHelper.getWritableDatabase();
-                database.execSQL("DROP TABLE playergame");
+                try {
+                    database.execSQL("DROP TABLE playergame");
+
+                }catch (SQLiteException e){}
                 //delete the number of players saved from previous game
                 SharedPreferences pref = getSharedPreferences("UserData", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
